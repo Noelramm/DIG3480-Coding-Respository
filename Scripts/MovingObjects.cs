@@ -24,9 +24,13 @@ public class MovingObjects : MonoBehaviour
         {
             //You are enemy one
             transform.Translate(new Vector3(0, 1, 0) * Time.deltaTime * 2f);
-        } 
+        } else if (objectType == 3)
+        {
+            //You are enemy two
+            transform.Translate(new Vector3(0, 1, 0) * Time.deltaTime * 0.7f);
+        }
 
-        if(transform.position.y > 11f || transform.position.y < -11f) 
+        if (transform.position.y > 11f || transform.position.y < -11f) 
         {
             Destroy(this.gameObject);
         }
