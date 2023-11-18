@@ -67,4 +67,10 @@ public class GameManager : MonoBehaviour
         scoreText.text = "Score: " + score;
     }
 
+    public void LivesCounter(int loseALife)
+    {
+        lives = lives + loseALife;
+        livesText.text = "Lives: " + lives;
+    }
+
 }
