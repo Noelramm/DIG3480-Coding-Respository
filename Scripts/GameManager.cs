@@ -9,14 +9,18 @@ public class GameManager : MonoBehaviour
 
     public GameObject playerPrefab;
     public GameObject enemyOnePrefab;
+    public GameObject enemyTwoPrefab;
     public GameObject cloudPrefab;
     // Coin asset
     public GameObject coinPrefab;
+    public GameObject heartPrefab;
     public int score;
     public int cloudsMove;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI livesText;
     public int lives;
+    private int maxLives = 3;
+
 
     // Start is called before the first frame update
     void Start()
@@ -24,13 +28,15 @@ public class GameManager : MonoBehaviour
         Instantiate(playerPrefab, transform.position, Quaternion.identity);
         CreateSky();
         InvokeRepeating("SpawnEnemyOne", 1f, 2f);
+        InvokeRepeating("SpawnEnemyTwo", 4f, 8f);
         // Week 12 Code Liz Thompson
         // Spawn coin after 1 second every 30 seconds.
         InvokeRepeating("SpawnCoin", 1f, 30f);
+        InvokeRepeating("SpawnHealth", 1f, 30f);
         cloudsMove = 1;
         score = 0;
         scoreText.text = "Score: " + score;
-        lives = 3;
+        lives = maxLives;
         livesText.text = "Lives: " + lives;
     }
 
@@ -45,6 +51,11 @@ public class GameManager : MonoBehaviour
         Instantiate(enemyOnePrefab, new Vector3(Random.Range(-8, 8), 7.5f, 0), Quaternion.Euler(0, 0, 180));
     }
 
+    void SpawnEnemyTwo()
+    {
+        Instantiate(enemyTwoPrefab, new Vector3(Random.Range(-8, 8), 5.5f, 0), Quaternion.Euler(0, 0, 180));
+    }
+
     void CreateSky()
     {
         for (int i = 0; i < 50; i++) 
@@ -53,9 +64,22 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void SpawnCoin()
+    public void SpawnCoin()
     {
-        Instantiate(coinPrefab, new Vector3(Random.Range(-8f, 8f), Random.Range(-4f, 0f), 0), Quaternion.identity);
+        for (int i = 0; i < 1; i++)
+        {
+            Instantiate(coinPrefab, new Vector3(Random.Range(-8f, 8f), Random.Range(-4f, 0f), 0), Quaternion.identity);
+
+        }
+    }
+
+    public void SpawnHealth()
+    {
+        for (int i = 0; i < 1; i++)
+        {
+            Instantiate(heartPrefab, new Vector3(Random.Range(-8f, 8f), Random.Range(-4f, 0f), 0), Quaternion.identity);
+
+        }
     }
 
     public void GameOver()
@@ -70,10 +94,20 @@ public class GameManager : MonoBehaviour
         scoreText.text = "Score: " + score;
     }
 
-    public void LivesCounter(int loseALife)
+    public void LifeLost(int loseALife)
     {
         lives = lives + loseALife;
         livesText.text = "Lives: " + lives;
+    }
+
+    public void LifeGained(int gainALife)
+    {
+        lives = lives + gainALife;
+        livesText.text = "Lives: " + lives;
+        if (lives > maxLives)
+        {
+            lives = maxLives;
+        }
     }
 
 }
