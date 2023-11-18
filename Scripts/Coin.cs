@@ -20,14 +20,13 @@ public class Coin : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter2D(Collider2D trigger) 
+    private void OnTriggerEnter2D(Collider2D whatIHit)
     {
-        if (trigger.tag == "Player") 
+        if (whatIHit.tag == "Player")
         {
             GameObject.Find("GameManager").GetComponent<GameManager>().EarnScore(1);
-            Instantiate(coinPickupPrefab, transform.position, Quaternion.identity);
+            GameObject.Find("GameManager").GetComponent<GameManager>().SpawnCoin();
             Destroy(this.gameObject);
         }
     }
-
 }
